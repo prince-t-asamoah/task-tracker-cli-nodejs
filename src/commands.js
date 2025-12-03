@@ -7,7 +7,15 @@
  * @returns {void}
  */
 const addTask = (description = 'No description') => {
-  console.log(description);
+    const date = new Date().toISOString();
+    const newTask = { 
+        id: String(crypto.randomUUID()),
+        description: description,
+        status: 'to-do',
+        createdAt: date,
+        updatedAt: date
+    }
+  console.log(newTask);
 };
 
 export { addTask };

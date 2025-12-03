@@ -8,10 +8,11 @@ function main() {
   const args = process.argv.slice(2);
 
   const command = args[0] || ""; // For no command available
+  const params = args.slice(1);
 
   switch (command) {
     case 'add':
-        addTask();
+        addTask(params[0]);
         break;
     case "help":
     default:
