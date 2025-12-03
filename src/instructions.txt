@@ -1,0 +1,13 @@
+task-cli — lightweight task workflow orchestrator
+
+Usage:
+task-cli add "<task>"
+task-cli list [done]
+
+Commands:
+add - Add a new task
+list [status] - List tasks by status, if no status provided retuns all task
+update - Update task by id
+delete - Delete task by id
+mark-<status> - Update task status (todo, in-progress, done) by id
+help - Show help
