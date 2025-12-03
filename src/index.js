@@ -9,6 +9,7 @@ function main() {
 
   const args = process.argv.slice(2);
   const command = args[0] || ""; // For no command available
+  const params = args.slice(1);
   
   const tasksFilePath = path.join(__dirname, 'tasks.json');
   //Creates tasks json file if does not exist
