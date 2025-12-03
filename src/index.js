@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { addTask } from "./commands.js";
 
 function main() {
   const __filename = fileURLToPath(import.meta.url);
@@ -8,6 +9,7 @@ function main() {
 
   const args = process.argv.slice(2);
   const command = args[0] || ""; // For no command available
+  const params = args.slice(1);
   
   const tasksFilePath = path.join(__dirname, 'tasks.json');
   //Creates tasks json file if does not exist
@@ -16,6 +18,9 @@ function main() {
   }
 
   switch (command) {
+    case 'add':
+        addTask(params[0]);
+        break;
     case "help":
     default:
       // Get the cli instructions
