@@ -2,6 +2,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { addTask } from "./commands.js";
 
 function main() {
   const args = process.argv.slice(2);
@@ -9,6 +10,9 @@ function main() {
   const command = args[0] || ""; // For no command available
 
   switch (command) {
+    case 'add':
+        addTask();
+        break;
     case "help":
     default:
 
