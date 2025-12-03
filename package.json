@@ -4,7 +4,7 @@
   "description": "A lightweight, file-backed command-line task manager — minimal dependencies, maximum velocity.",
   "main": "/src/index.js",
   "bin": {
-    "task-tracker-cli": "bin/task-cli.js"
+    "task-cli": "bin/task-cli.js"
   },
   "type": "module",
   "scripts": {
