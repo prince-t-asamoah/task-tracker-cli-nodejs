@@ -82,7 +82,8 @@ const listAllTask = () => {
  */
 const deleteTask = (taskId) => {
   if (!taskId) {
-    throw new Error("Task id must be provided to delete a task");
+    console.error("Error: Task id must be provided to delete a task");
+    return;
   }
   try {
     const tasksFileJson = fs.readFileSync(tasksFilePath, "utf-8");
