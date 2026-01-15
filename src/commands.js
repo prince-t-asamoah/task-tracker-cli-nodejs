@@ -55,12 +55,9 @@ const addTask = (description = "No description") => {
  * @returns {void}
  */
 const listAllTask = () => {
-  // const taskFilePath = path.join(__dirname, tasksfileName);
-  let allTasks = [];
-
   try {
     const tasksFileJson = fs.readFileSync(tasksFilePath, "utf-8");
-    allTasks = JSON.parse(tasksFileJson);
+    const allTasks = JSON.parse(tasksFileJson);
     console.log(allTasks);
   } catch (error) {
     console.error(`Error listing all tasks: ${error.message}`);
