@@ -62,13 +62,40 @@ const addTask = (description = "No description") => {
 /**
  * List all saved tasks.
  *
+ * @param {string} status - Task status (to-do, in-progress, done, all(default))
  * @returns {void}
  */
-const listAllTask = () => {
+const listAllTask = (status = "all") => {
   try {
     const tasksFileJson = fs.readFileSync(TASK_FILE_PATH, "utf-8");
     const allTasks = JSON.parse(tasksFileJson);
-    console.log(allTasks);
+
+    const getTasksByStatus = (status) =>
+      allTasks.filter((task) => task.status === status);
+    let filteredTasks = [];
+
+    switch (status) {
+      case "to-do":
+        filteredTasks = getTasksByStatus("to-do");
+        filteredTasks.length > 0
+          ? console.log(filteredTasks)
+          : console.log("No to-do tasks available.");
+        break;
+      case "in-progress":
+        filteredTasks = getTasksByStatus("in-progress");
+        filteredTasks.length > 0
+          ? console.log(filteredTasks)
+          : console.log("No in progress tasks available.");
+        break;
+      case "done":
+        filteredTasks = getTasksByStatus("done");
+        filteredTasks.length > 0
+          ? console.log(filteredTasks)
+          : console.log("No in progress tasks available.");
+        break;
+      default:
+        allTasks.length > 0 ? console.log(allTasks) : console.log('No task available.');
+    }
   } catch (error) {
     console.error(`Error listing all tasks: ${error.message}`);
   }
@@ -144,7 +171,7 @@ const updateTask = (taskId, description) => {
     const updatedTask = {
       ...allTasks[taskToBeUpdateIndex],
       description,
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
     allTasks[taskToBeUpdateIndex] = updatedTask;
 

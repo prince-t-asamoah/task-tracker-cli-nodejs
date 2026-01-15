@@ -22,7 +22,8 @@ function main() {
       addTask(params[0]);
       break;
     case "list":
-      listAllTask();
+      const status = params[0];
+      listAllTask(status);
       break;
     case "delete":
       deleteTask(params[0]);
