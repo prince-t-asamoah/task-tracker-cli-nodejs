@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { addTask, listAllTask } from "./commands.js";
+import { addTask, deleteTask, listAllTask } from "./commands.js";
 
 function main() {
   const __filename = fileURLToPath(import.meta.url);
@@ -23,6 +23,10 @@ function main() {
         break;
     case 'list':
         listAllTask();
+        break;
+    case 'delete':
+        deleteTask(params[0]);
+        break;
     case "help":
     default:
       // Get the cli instructions
