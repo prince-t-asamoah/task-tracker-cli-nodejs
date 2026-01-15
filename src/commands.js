@@ -4,6 +4,8 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const tasksfileName = "tasks.json";
+const tasksFilePath = path.join(__dirname, tasksfileName);
 
 /**
  * Adds a new task to task list.
@@ -22,8 +24,6 @@ const addTask = (description = "No description") => {
   };
 
   let currentTasks = [];
-
-  const tasksFilePath = path.join(__dirname, "tasks.json");
 
   // Get current tasks list
   const jsonFileContent = fs.readFileSync(tasksFilePath, "utf-8");
@@ -49,4 +49,24 @@ const addTask = (description = "No description") => {
   }
 };
 
-export { addTask };
+/**
+ * List all saved tasks.
+ *
+ * @returns {void}
+ */
+const listAllTask = () => {
+  // const taskFilePath = path.join(__dirname, tasksfileName);
+  let allTasks = [];
+
+  try {
+    const tasksFileJson = fs.readFileSync(tasksFilePath, "utf-8");
+    allTasks = JSON.parse(tasksFileJson);
+    console.log(allTasks);
+  } catch (error) {
+    console.error(`Error listing all tasks: ${error.message}`);
+  }
+};
+
+
+
+export { addTask, listAllTask };
