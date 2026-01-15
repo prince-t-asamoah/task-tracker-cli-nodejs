@@ -111,4 +111,52 @@ const deleteTask = (taskId) => {
   }
 };
 
-export { addTask, listAllTask, deleteTask };
+/**
+ * Update task description or status
+ *
+ * @param {string} taskId - ID of task to be deleted
+ * @param {string} description - New task description
+ *
+ * @returns {void}
+ */
+const updateTask = (taskId, description) => {
+  if (!taskId && !description) {
+    console.log("Task id and description must be provided to update a task");
+    return;
+  }
+
+  try {
+    // Read and parse tasks to object
+    const tasksJson = fs.readFileSync(tasksFilePath, "utf-8");
+    /** @type {Array<Task>} - All task object */
+    const allTasks = JSON.parse(tasksJson);
+
+    const taskToBeUpdateIndex = allTasks.findIndex(
+      (task) => task.id === taskId
+    );
+    if (taskToBeUpdateIndex === -1) {
+      console.log(`Task with id: ${taskId} does not exist.`);
+      return;
+    }
+
+    // Update current task object with new description
+    /** @type {Task} - Updated task object*/
+    const updatedTask = {
+      ...allTasks[taskToBeUpdateIndex],
+      description,
+      updatedAt: new Date().toISOString()
+    };
+    allTasks[taskToBeUpdateIndex] = updatedTask;
+
+    // Save updated tasks object to file.
+    fs.writeFileSync(tasksFilePath, JSON.stringify(allTasks, null, 2));
+    console.log(`Task with id: ${taskId} updated successfully.`);
+  } catch (error) {
+    console.error(
+      `Error updating task description with id ${taskId}`,
+      error.message
+    );
+  }
+};
+
+export { addTask, listAllTask, deleteTask, updateTask };
