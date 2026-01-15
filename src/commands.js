@@ -4,8 +4,8 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const tasksfileName = "tasks.json";
-const tasksFilePath = path.join(__dirname, tasksfileName);
+const TASK_FILE_NAME = "tasks.json";
+const TASK_FILE_PATH = path.join(__dirname, TASK_FILE_NAME);
 
 /**
  *  A task object data model
@@ -36,26 +36,26 @@ const addTask = (description = "No description") => {
   let currentTasks = [];
 
   // Get current tasks list
-  const jsonFileContent = fs.readFileSync(tasksFilePath, "utf-8");
+  const jsonFileContent = fs.readFileSync(TASK_FILE_PATH, "utf-8");
 
   // Parse tasks json file and add new task to current tasks list
   try {
     currentTasks = JSON.parse(jsonFileContent);
     currentTasks.push(newTask);
   } catch (error) {
-    console.error(`Error parsing file:${tasksFilePath} JSON: ${error}`);
+    console.error(`Error parsing file:${TASK_FILE_PATH} JSON: ${error}`);
   }
 
   // Save updated current tasks to json file
   try {
     fs.writeFileSync(
-      tasksFilePath,
+      TASK_FILE_PATH,
       JSON.stringify(currentTasks, null, 2),
       "utf-8"
     );
     console.log(`Task added successfully (ID:${newTask.id})`);
   } catch (error) {
-    console.error(`Error writing to JSON file: ${tasksFilePath}`);
+    console.error(`Error writing to JSON file: ${TASK_FILE_PATH}`);
   }
 };
 
@@ -66,7 +66,7 @@ const addTask = (description = "No description") => {
  */
 const listAllTask = () => {
   try {
-    const tasksFileJson = fs.readFileSync(tasksFilePath, "utf-8");
+    const tasksFileJson = fs.readFileSync(TASK_FILE_PATH, "utf-8");
     const allTasks = JSON.parse(tasksFileJson);
     console.log(allTasks);
   } catch (error) {
@@ -86,7 +86,7 @@ const deleteTask = (taskId) => {
     return;
   }
   try {
-    const tasksFileJson = fs.readFileSync(tasksFilePath, "utf-8");
+    const tasksFileJson = fs.readFileSync(TASK_FILE_PATH, "utf-8");
 
     /**@type {Array<Task>} */
     const allTasks = JSON.parse(tasksFileJson);
@@ -101,7 +101,7 @@ const deleteTask = (taskId) => {
     // Remove task by id and write current changes to task file
     const currentTasks = allTasks.filter((task) => task.id !== taskId);
     fs.writeFileSync(
-      tasksFilePath,
+      TASK_FILE_PATH,
       JSON.stringify(currentTasks, null, 2),
       "utf-8"
     );
@@ -127,7 +127,7 @@ const updateTask = (taskId, description) => {
 
   try {
     // Read and parse tasks to object
-    const tasksJson = fs.readFileSync(tasksFilePath, "utf-8");
+    const tasksJson = fs.readFileSync(TASK_FILE_PATH, "utf-8");
     /** @type {Array<Task>} - All task object */
     const allTasks = JSON.parse(tasksJson);
 
@@ -149,7 +149,7 @@ const updateTask = (taskId, description) => {
     allTasks[taskToBeUpdateIndex] = updatedTask;
 
     // Save updated tasks object to file.
-    fs.writeFileSync(tasksFilePath, JSON.stringify(allTasks, null, 2));
+    fs.writeFileSync(TASK_FILE_PATH, JSON.stringify(allTasks, null, 2));
     console.log(`Task with id: ${taskId} updated successfully.`);
   } catch (error) {
     console.error(
