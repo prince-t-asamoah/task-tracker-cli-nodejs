@@ -3,6 +3,9 @@ task-cli — lightweight task workflow orchestrator
 Usage:
 task-cli add "<task>"
 task-cli list [done]
+task-cli update [task-id] "<task>"
+task-cli delete [task-id]
+task-cli mark-<status> [task-id]
 
 Commands:
 add - Add a new task
