@@ -94,7 +94,9 @@ const listAllTask = (status = "all") => {
           : console.log("No in progress tasks available.");
         break;
       default:
-        allTasks.length > 0 ? console.log(allTasks) : console.log('No task available.');
+        allTasks.length > 0
+          ? console.log(allTasks)
+          : console.log("No task available.");
     }
   } catch (error) {
     console.error(`Error listing all tasks: ${error.message}`);
@@ -186,4 +188,49 @@ const updateTask = (taskId, description) => {
   }
 };
 
-export { addTask, listAllTask, deleteTask, updateTask };
+/**
+ * Marks task done by id
+ *
+ * @param {string} taskId - Task to be marked done id
+ * @returns {void}
+ */
+const markTaskDone = (taskId) => {
+  if (!taskId) {
+    console.log("Task id must be provided to mark a task done.");
+    return;
+  }
+
+  try {
+    const tasksJson = fs.readFileSync(TASK_FILE_PATH, "utf-8");
+    /**@type {Array<Task>} */
+    const allTasks = JSON.parse(tasksJson);
+
+    // Search if task exist by task id
+    const taskToBeUpdatedIndex = allTasks.findIndex((task) => task.id);
+    if (taskToBeUpdatedIndex === -1) {
+      console.log(`Task with id: ${taskId} does not exist.`);
+      return;
+    }
+
+    // Update task status and save to file
+    const taskToBeUpdated = allTasks[taskToBeUpdatedIndex];
+    allTasks[taskToBeUpdatedIndex] = {
+      ...taskToBeUpdated,
+      status: "done",
+      updatedAt: new Date().toISOString(),
+    };
+    fs.writeFileSync(
+      TASK_FILE_PATH,
+      JSON.stringify(allTasks, null, 2),
+      "utf-8"
+    );
+    console.log(`Task with id: ${taskId} marked done successfully.`);
+  } catch (error) {
+    console.error(
+      `Error updating task status with id ${taskId}`,
+      error.message
+    );
+  }
+};
+
+export { addTask, listAllTask, deleteTask, updateTask, markTaskDone };
