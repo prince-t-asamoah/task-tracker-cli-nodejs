@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { addTask, deleteTask, listAllTask, markTaskDone, updateTask } from "./commands.js";
+import { addTask, deleteTask, listAllTask, markTaskStatus, updateTask } from "./commands.js";
 
 function main() {
   const __filename = fileURLToPath(import.meta.url);
@@ -34,7 +34,10 @@ function main() {
       updateTask(taskId, description);
       break;
     case "mark-done":
-      markTaskDone(params[0]);
+    case 'mark-to-do':
+    case 'mark-in-progress':
+      const markStatus = command.split('mark-')[1] // Get the status
+      markTaskStatus(params[0], markStatus);
       break;
     case "help":
     default:

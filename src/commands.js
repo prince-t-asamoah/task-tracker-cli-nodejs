@@ -192,11 +192,12 @@ const updateTask = (taskId, description) => {
  * Marks task done by id
  *
  * @param {string} taskId - Task to be marked done id
+ * @param {string} status - Task status
  * @returns {void}
  */
-const markTaskDone = (taskId) => {
+const markTaskStatus = (taskId, status) => {
   if (!taskId) {
-    console.log("Task id must be provided to mark a task done.");
+    console.log(`Task id must be provided to mark a task ${status}.`);
     return;
   }
 
@@ -216,7 +217,7 @@ const markTaskDone = (taskId) => {
     const taskToBeUpdated = allTasks[taskToBeUpdatedIndex];
     allTasks[taskToBeUpdatedIndex] = {
       ...taskToBeUpdated,
-      status: "done",
+      status,
       updatedAt: new Date().toISOString(),
     };
     fs.writeFileSync(
@@ -224,7 +225,7 @@ const markTaskDone = (taskId) => {
       JSON.stringify(allTasks, null, 2),
       "utf-8"
     );
-    console.log(`Task with id: ${taskId} marked done successfully.`);
+    console.log(`Task with id: ${taskId} marked ${status} successfully.`);
   } catch (error) {
     console.error(
       `Error updating task status with id ${taskId}`,
@@ -233,4 +234,4 @@ const markTaskDone = (taskId) => {
   }
 };
 
-export { addTask, listAllTask, deleteTask, updateTask, markTaskDone };
+export { addTask, listAllTask, deleteTask, updateTask, markTaskStatus };
