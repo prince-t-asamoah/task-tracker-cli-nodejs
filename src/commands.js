@@ -206,20 +206,22 @@ const markTaskStatus = (taskId, status) => {
     /**@type {Array<Task>} */
     const allTasks = JSON.parse(tasksJson);
 
-    // Search if task exist by task id
+    // Search if task to be updated exist by task id
     const taskToBeUpdatedIndex = allTasks.findIndex((task) => task.id);
     if (taskToBeUpdatedIndex === -1) {
       console.log(`Task with id: ${taskId} does not exist.`);
       return;
     }
 
-    // Update task status and save to file
+    // Update task status and updated timestamp
     const taskToBeUpdated = allTasks[taskToBeUpdatedIndex];
     allTasks[taskToBeUpdatedIndex] = {
       ...taskToBeUpdated,
       status,
       updatedAt: new Date().toISOString(),
     };
+
+    // Save updated tasks to file
     fs.writeFileSync(
       TASK_FILE_PATH,
       JSON.stringify(allTasks, null, 2),
